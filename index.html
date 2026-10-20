@@ -1,33 +1,765 @@
-<!doctype html>
-<html class="no-js" lang="">
-
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title></title>
-  <link rel="stylesheet" href="css/style.css">
-  <meta name="description" content="">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PROFLOWERS | Floristería Artesanal & Diseños Exclusivos</title>
 
-  <meta property="og:title" content="">
-  <meta property="og:type" content="">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
-  <meta property="og:image:alt" content="">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,500;1,700&display=swap" rel="stylesheet">
 
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" href="/icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-  <link rel="manifest" href="site.webmanifest">
-  <meta name="theme-color" content="#fafafa">
+  <!-- FontAwesome & Lucide Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              pink: '#fce4ec',       /* Hero pink background */
+              lightPink: '#f8bbd0',
+              accent: '#e91e63',     /* Main magenta accent */
+              deep: '#880e4f',       /* Deep dark magenta */
+              textDark: '#2c1e21',   /* Main dark typography */
+              darkBg: '#181113',     /* Dark section background */
+              whatsapp: '#25D366'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Smooth Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #fce4ec;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #e91e63;
+      border-radius: 4px;
+    }
+
+    /* Continuous Ticker Animation */
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-ticker {
+      display: inline-flex;
+      animation: ticker 25s linear infinite;
+    }
+    .animate-ticker:hover {
+      animation-play-state: paused;
+    }
+
+    /* Subtle hero tulip drop shadow */
+    .tulip-shadow {
+      filter: drop-shadow(0px 20px 30px rgba(136, 14, 79, 0.15));
+    }
+
+    /* Glassmorphism effects */
+    .glass-pill {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    /* Slider dot transitions */
+    .slide-dot.active {
+      height: 24px;
+      background-color: #e91e63;
+    }
+  </style>
 </head>
+<body class="bg-brand-pink text-brand-textDark font-sans antialiased selection:bg-brand-accent selection:text-white overflow-x-hidden">
 
-<body>
+<!-- HEADER / FLOATING CAPSULE NAVBAR (Exact layout from reference) -->
+<header class="fixed top-0 left-0 right-0 z-50 px-3 sm:px-6 pt-3 sm:pt-5">
+  <div class="max-w-7xl mx-auto bg-white rounded-2xl md:rounded-full shadow-md px-3 py-2 flex items-center justify-between border border-pink-100">
 
-  <!-- Add your site or application content here -->
-  <p>Hello world! This is HTML5 Boilerplate.</p>
-  <script src="js/app.js"></script>
+    <!-- Left Side: Grid Button + Brand Name -->
+    <div class="flex items-center gap-3">
+      <button id="gridMenuBtn" onclick="toggleMobileMenu()" aria-label="Abrir Menú" class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl sm:rounded-full bg-pink-100 text-brand-accent hover:bg-brand-accent hover:text-white transition-all flex items-center justify-center font-bold">
+        <i class="fa-solid fa-border-all text-base sm:text-lg"></i>
+      </button>
+      <a href="#" class="text-lg sm:text-xl font-extrabold tracking-wider text-brand-textDark font-sans flex items-center gap-1">
+        PRO<span class="text-brand-accent">FLOWERS</span>
+      </a>
+    </div>
 
+    <!-- Center Navigation Links -->
+    <nav class="hidden md:flex items-center space-x-6 lg:space-x-8 text-xs font-bold tracking-widest text-slate-700 uppercase">
+      <a href="#catalogo" class="hover:text-brand-accent transition-colors">Flores</a>
+      <a href="#catalogo" class="hover:text-brand-accent transition-colors">Plantas</a>
+      <a href="#ofertas" class="hover:text-brand-accent transition-colors">Ofertas</a>
+      <a href="#nosotros" class="hover:text-brand-accent transition-colors">Nosotros</a>
+      <a href="#ubicacion" class="hover:text-brand-accent transition-colors">Ubicación</a>
+      <a href="#faq" class="hover:text-brand-accent transition-colors">FAQ</a>
+    </nav>
+
+    <!-- Right Side: Account Link (NO SHOPPING CART) -->
+    <div class="flex items-center gap-3">
+      <a href="#" onclick="openModal('Mi Cuenta / Iniciar Sesión')" class="hidden sm:inline-block text-xs font-bold tracking-wider text-slate-700 uppercase hover:text-brand-accent transition-colors px-3 py-2">
+        Iniciar Sesión
+      </a>
+      <button onclick="openModal('Cotización Especial')" class="bg-brand-accent hover:bg-brand-deep text-white px-4 sm:px-6 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all shadow-sm hover:shadow-md">
+        Cotizar
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Dropdown -->
+  <div id="mobileMenu" class="hidden md:hidden max-w-7xl mx-auto mt-2 bg-white rounded-2xl shadow-xl p-6 border border-pink-100 space-y-4 text-center font-bold uppercase text-xs tracking-wider text-slate-700">
+    <a href="#catalogo" onclick="toggleMobileMenu()" class="block py-2 border-b border-pink-50 hover:text-brand-accent">Flores</a>
+    <a href="#catalogo" onclick="toggleMobileMenu()" class="block py-2 border-b border-pink-50 hover:text-brand-accent">Plantas</a>
+    <a href="#ofertas" onclick="toggleMobileMenu()" class="block py-2 border-b border-pink-50 hover:text-brand-accent">Ofertas</a>
+    <a href="#nosotros" onclick="toggleMobileMenu()" class="block py-2 border-b border-pink-50 hover:text-brand-accent">Nosotros</a>
+    <a href="#ubicacion" onclick="toggleMobileMenu()" class="block py-2 border-b border-pink-50 hover:text-brand-accent">Ubicación</a>
+    <a href="#faq" onclick="toggleMobileMenu()" class="block py-2 hover:text-brand-accent">FAQ</a>
+    <div class="pt-2">
+      <button onclick="openModal('Iniciar Sesión'); toggleMobileMenu();" class="w-full bg-pink-100 text-brand-accent py-3 rounded-full font-bold uppercase tracking-wider text-xs">
+        Iniciar Sesión / Registro
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO SECTION (Exact replica of image reference layout) -->
+<section class="min-h-screen pt-28 sm:pt-32 pb-12 px-4 md:px-12 flex items-center relative overflow-hidden bg-brand-pink">
+
+  <!-- Slide Indicator Vertical Dots (Right side from reference) -->
+  <div class="hidden lg:flex flex-col items-center gap-2 absolute right-6 top-1/2 -translate-y-1/2 z-20">
+    <span class="slide-dot active w-2 rounded-full transition-all"></span>
+    <span class="slide-dot w-2 h-2 rounded-full bg-brand-accent/30"></span>
+    <span class="slide-dot w-2 h-2 rounded-full bg-brand-accent/30"></span>
+    <span class="slide-dot w-2 h-2 rounded-full bg-brand-accent/30"></span>
+  </div>
+
+  <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+
+    <!-- Left Hero Content -->
+    <div class="lg:col-span-7 space-y-6 z-10 text-left">
+
+      <!-- Numbered Pink Badge ("01" in reference image) -->
+      <div class="w-9 h-9 rounded-full bg-brand-lightPink/80 text-brand-deep font-bold text-xs flex items-center justify-center shadow-sm">
+        01
+      </div>
+
+      <!-- Main Impact Heading with text contrast -->
+      <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-brand-textDark leading-[1.05]">
+        Colección <br>
+        <span class="text-brand-accent">Primavera</span> Primavera
+      </h1>
+
+      <!-- Subtitle Text -->
+      <p class="text-slate-600 font-medium text-sm sm:text-base md:text-lg max-w-xl leading-relaxed">
+        Flores frescas directo de nuestros cultivos, diseñadas por artesanos florales para transmitir sentimientos en cada ocasión especial.
+      </p>
+
+      <!-- Action Button Pill -->
+      <div class="pt-4 flex flex-wrap items-center gap-4">
+        <a href="#catalogo" class="bg-brand-deep hover:bg-brand-accent text-white text-xs sm:text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-full shadow-lg transition-all transform hover:scale-105">
+          EXPLORAR CATÁLOGO
+        </a>
+      </div>
+    </div>
+
+    <!-- Right Hero Image: Tulip Flower Cutout -->
+    <div class="lg:col-span-5 relative flex items-center justify-center pt-8 lg:pt-0">
+      <div class="relative w-full max-w-md lg:max-w-none flex justify-center">
+        <!-- Crisp Tulip Flower Image -->
+        <img src="https://images.unsplash.com/photo-1520763185298-1b434c919102?auto=format&fit=crop&w=1000&q=80"
+             alt="Tulipán Rosado Exclusivo"
+             class="tulip-shadow max-h-[480px] sm:max-h-[580px] lg:max-h-[640px] object-contain transform hover:scale-105 transition-transform duration-700">
+      </div>
+
+      <!-- Bottom Floating Carousel Controls ("NEXT >") -->
+      <div class="absolute bottom-0 right-0 sm:right-4 flex items-center gap-2 z-20">
+        <button class="w-10 h-10 rounded-full bg-white/80 hover:bg-white text-brand-textDark shadow-md flex items-center justify-center transition-all">
+          <i class="fa-solid fa-chevron-left text-xs"></i>
+        </button>
+        <button class="bg-white hover:bg-pink-50 text-brand-textDark text-xs font-bold px-5 py-3 rounded-full shadow-md flex items-center gap-2 tracking-wider transition-all">
+          NEXT <i class="fa-solid fa-chevron-right text-xs text-brand-accent"></i>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- BENEFITS MARQUEE TICKER BANNER -->
+<section class="bg-brand-accent text-white py-4 overflow-hidden border-y border-pink-300">
+  <div class="animate-ticker whitespace-nowrap flex items-center text-xs font-bold tracking-widest uppercase gap-8">
+    <span class="flex items-center gap-2"><i class="fa-solid fa-truck-fast"></i> ENVÍOS EL MISMO DÍA DENTRO DE LA CIUDAD</span>
+    <span>•</span>
+    <span class="flex items-center gap-2"><i class="fa-solid fa-seedling"></i> FLORES FRESCA 100% CULTIVO LOCAL</span>
+    <span>•</span>
+    <span class="flex items-center gap-2"><i class="fa-solid fa-award"></i> DISEÑOS ARTESANALES ÚNICOS</span>
+    <span>•</span>
+    <span class="flex items-center gap-2"><i class="fa-brands fa-whatsapp"></i> ATENCIÓN INMEDIATA POR WHATSAPP</span>
+    <span>•</span>
+    <span class="flex items-center gap-2"><i class="fa-solid fa-gift"></i> TARJETA DE REGALO CORTESÍA</span>
+    <span>•</span>
+    <!-- Duplicate for continuous animation -->
+    <span class="flex items-center gap-2"><i class="fa-solid fa-truck-fast"></i> ENVÍOS EL MISMO DÍA DENTRO DE LA CIUDAD</span>
+    <span>•</span>
+    <span class="flex items-center gap-2"><i class="fa-solid fa-seedling"></i> FLORES FRESCA 100% CULTIVO LOCAL</span>
+    <span>•</span>
+    <span class="flex items-center gap-2"><i class="fa-solid fa-award"></i> DISEÑOS ARTESANALES ÚNICOS</span>
+    <span>•</span>
+    <span class="flex items-center gap-2"><i class="fa-brands fa-whatsapp"></i> ATENCIÓN INMEDIATA POR WHATSAPP</span>
+    <span>•</span>
+    <span class="flex items-center gap-2"><i class="fa-solid fa-gift"></i> TARJETA DE REGALO CORTESÍA</span>
+    <span>•</span>
+  </div>
+</section>
+
+<!-- PRODUCTS & CATALOG SECTION -->
+<section id="catalogo" class="py-20 px-4 md:px-12 bg-white">
+  <div class="max-w-7xl mx-auto">
+
+    <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+      <span class="text-brand-accent font-bold text-xs tracking-widest uppercase bg-pink-100 px-4 py-1.5 rounded-full">Catálogo Exclusivo</span>
+      <h2 class="text-3xl sm:text-5xl font-extrabold text-brand-textDark">Arreglos Florales Destacados</h2>
+      <p class="text-slate-500 text-sm sm:text-base">Haz tu pedido directamente por WhatsApp y lo entregamos en la fecha y hora que elijas.</p>
+    </div>
+
+    <!-- Product Grid (8 Items) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+
+      <!-- Card 1 -->
+      <div class="bg-brand-pink/30 rounded-3xl p-4 border border-pink-100 flex flex-col justify-between hover:shadow-xl transition-all group">
+        <div>
+          <div class="relative overflow-hidden rounded-2xl aspect-square mb-4 bg-white">
+            <img src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=600&q=80" alt="Sinfonía Pastel" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-brand-textDark font-extrabold text-[10px] uppercase tracking-wider px-3 py-1 rounded-full shadow-sm">Bestseller</span>
+          </div>
+          <h3 class="font-extrabold text-base text-brand-textDark mb-1">Sinfonía Pastel</h3>
+          <p class="text-xs text-slate-500 mb-3">Rosas rosadas, peonías blancas y toques de follaje suave.</p>
+          <div class="text-lg font-black text-brand-deep mb-4">$180.000 COP</div>
+        </div>
+        <button onclick="orderWhatsApp('Sinfonía Pastel', '$180.000 COP')" class="w-full bg-brand-whatsapp hover:bg-emerald-600 text-white font-bold text-xs py-3.5 rounded-2xl shadow-md transition-all flex items-center justify-center gap-2">
+          <i class="fa-brands fa-whatsapp text-lg"></i> PEDIR POR WHATSAPP
+        </button>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="bg-brand-pink/30 rounded-3xl p-4 border border-pink-100 flex flex-col justify-between hover:shadow-xl transition-all group">
+        <div>
+          <div class="relative overflow-hidden rounded-2xl aspect-square mb-4 bg-white">
+            <img src="https://images.unsplash.com/photo-1644248422980-8e0eb75a1557?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D">
+            <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-brand-textDark font-extrabold text-[10px] uppercase tracking-wider px-3 py-1 rounded-full shadow-sm">Tulipanes</span>
+          </div>
+          <h3 class="font-extrabold text-base text-brand-textDark mb-1">Elegancia Holandesa</h3>
+          <p class="text-xs text-slate-500 mb-3">Caja de tulipanes holandeses seleccionados en degradé.</p>
+          <div class="text-lg font-black text-brand-deep mb-4">$220.000 COP</div>
+        </div>
+        <button onclick="orderWhatsApp('Elegancia Holandesa', '$220.000 COP')" class="w-full bg-brand-whatsapp hover:bg-emerald-600 text-white font-bold text-xs py-3.5 rounded-2xl shadow-md transition-all flex items-center justify-center gap-2">
+          <i class="fa-brands fa-whatsapp text-lg"></i> PEDIR POR WHATSAPP
+        </button>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="bg-brand-pink/30 rounded-3xl p-4 border border-pink-100 flex flex-col justify-between hover:shadow-xl transition-all group">
+        <div>
+          <div class="relative overflow-hidden rounded-2xl aspect-square mb-4 bg-white">
+            <img src="https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&w=600&q=80" alt="Jardín Silvestre" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-brand-textDark font-extrabold text-[10px] uppercase tracking-wider px-3 py-1 rounded-full shadow-sm">Campestre</span>
+          </div>
+          <h3 class="font-extrabold text-base text-brand-textDark mb-1">Jardín Silvestre</h3>
+          <p class="text-xs text-slate-500 mb-3">Combinación bohemia de margaritas, lisianthus y eucalipto.</p>
+          <div class="text-lg font-black text-brand-deep mb-4">$150.000 COP</div>
+        </div>
+        <button onclick="orderWhatsApp('Jardín Silvestre', '$150.000 COP')" class="w-full bg-brand-whatsapp hover:bg-emerald-600 text-white font-bold text-xs py-3.5 rounded-2xl shadow-md transition-all flex items-center justify-center gap-2">
+          <i class="fa-brands fa-whatsapp text-lg"></i> PEDIR POR WHATSAPP
+        </button>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="bg-brand-pink/30 rounded-3xl p-4 border border-pink-100 flex flex-col justify-between hover:shadow-xl transition-all group">
+        <div>
+          <div class="relative overflow-hidden rounded-2xl aspect-square mb-4 bg-white">
+            <img src="https://images.unsplash.com/photo-1591886960571-74d43a9d4166?auto=format&fit=crop&w=600&q=80" alt="Caja Royal de Rosas" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-brand-textDark font-extrabold text-[10px] uppercase tracking-wider px-3 py-1 rounded-full shadow-sm">Premium</span>
+          </div>
+          <h3 class="font-extrabold text-base text-brand-textDark mb-1">Caja Royal de Rosas</h3>
+          <p class="text-xs text-slate-500 mb-3">24 Rosas rojas de exportación en sombrerera artesanal.</p>
+          <div class="text-lg font-black text-brand-deep mb-4">$250.000 COP</div>
+        </div>
+        <button onclick="orderWhatsApp('Caja Royal de Rosas', '$250.000 COP')" class="w-full bg-brand-whatsapp hover:bg-emerald-600 text-white font-bold text-xs py-3.5 rounded-2xl shadow-md transition-all flex items-center justify-center gap-2">
+          <i class="fa-brands fa-whatsapp text-lg"></i> PEDIR POR WHATSAPP
+        </button>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="bg-brand-pink/30 rounded-3xl p-4 border border-pink-100 flex flex-col justify-between hover:shadow-xl transition-all group">
+        <div>
+          <div class="relative overflow-hidden rounded-2xl aspect-square mb-4 bg-white">
+            <img src="https://images.unsplash.com/photo-1533616688419-b7a585564566?auto=format&fit=crop&w=600&q=80" alt="Orquídea Blanca Imperial" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-brand-textDark font-extrabold text-[10px] uppercase tracking-wider px-3 py-1 rounded-full shadow-sm">Orquídeas</span>
+          </div>
+          <h3 class="font-extrabold text-base text-brand-textDark mb-1">Orquídea Imperial</h3>
+          <p class="text-xs text-slate-500 mb-3">Planta viva de Phalaenopsis doble vara en maceta de cerámica.</p>
+          <div class="text-lg font-black text-brand-deep mb-4">$195.000 COP</div>
+        </div>
+        <button onclick="orderWhatsApp('Orquídea Imperial', '$195.000 COP')" class="w-full bg-brand-whatsapp hover:bg-emerald-600 text-white font-bold text-xs py-3.5 rounded-2xl shadow-md transition-all flex items-center justify-center gap-2">
+          <i class="fa-brands fa-whatsapp text-lg"></i> PEDIR POR WHATSAPP
+        </button>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="bg-brand-pink/30 rounded-3xl p-4 border border-pink-100 flex flex-col justify-between hover:shadow-xl transition-all group">
+        <div>
+          <div class="relative overflow-hidden rounded-2xl aspect-square mb-4 bg-white">
+            <img src="https://images.unsplash.com/photo-1652346107876-58d7354ce9b8?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D">
+            <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-brand-textDark font-extrabold text-[10px] uppercase tracking-wider px-3 py-1 rounded-full shadow-sm">Edición Limitada</span>
+          </div>
+          <h3 class="font-extrabold text-base text-brand-textDark mb-1">Bouquet Peonías Lux</h3>
+          <p class="text-xs text-slate-500 mb-3">Peonías importadas rosadas en envoltorio de seda.</p>
+          <div class="text-lg font-black text-brand-deep mb-4">$290.000 COP</div>
+        </div>
+        <button onclick="orderWhatsApp('Bouquet Peonías Lux', '$290.000 COP')" class="w-full bg-brand-whatsapp hover:bg-emerald-600 text-white font-bold text-xs py-3.5 rounded-2xl shadow-md transition-all flex items-center justify-center gap-2">
+          <i class="fa-brands fa-whatsapp text-lg"></i> PEDIR POR WHATSAPP
+        </button>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="bg-brand-pink/30 rounded-3xl p-4 border border-pink-100 flex flex-col justify-between hover:shadow-xl transition-all group">
+        <div>
+          <div class="relative overflow-hidden rounded-2xl aspect-square mb-4 bg-white">
+            <img src="https://images.unsplash.com/photo-1680563094046-5d846e2c59d1?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D">
+            <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-brand-textDark font-extrabold text-[10px] uppercase tracking-wider px-3 py-1 rounded-full shadow-sm">Hortensias</span>
+          </div>
+          <h3 class="font-extrabold text-base text-brand-textDark mb-1">Hortensias Sol</h3>
+          <p class="text-xs text-slate-500 mb-3">Hortensias azules y blancas con detalles de gypsophila.</p>
+          <div class="text-lg font-black text-brand-deep mb-4">$165.000 COP</div>
+        </div>
+        <button onclick="orderWhatsApp('Hortensias Sol', '$165.000 COP')" class="w-full bg-brand-whatsapp hover:bg-emerald-600 text-white font-bold text-xs py-3.5 rounded-2xl shadow-md transition-all flex items-center justify-center gap-2">
+          <i class="fa-brands fa-whatsapp text-lg"></i> PEDIR POR WHATSAPP
+        </button>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="bg-brand-pink/30 rounded-3xl p-4 border border-pink-100 flex flex-col justify-between hover:shadow-xl transition-all group">
+        <div>
+          <div class="relative overflow-hidden rounded-2xl aspect-square mb-4 bg-white">
+            <img src="https://images.unsplash.com/photo-1563241527-3004b7be0ffd?auto=format&fit=crop&w=600&q=80" alt="Caja Romántica de Verano" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-brand-textDark font-extrabold text-[10px] uppercase tracking-wider px-3 py-1 rounded-full shadow-sm">Romántico</span>
+          </div>
+          <h3 class="font-extrabold text-base text-brand-textDark mb-1">Caja Romántica Verano</h3>
+          <p class="text-xs text-slate-500 mb-3">Mezcla floral vibrante con chocolates finos incluidos.</p>
+          <div class="text-lg font-black text-brand-deep mb-4">$210.000 COP</div>
+        </div>
+        <button onclick="orderWhatsApp('Caja Romántica Verano', '$210.000 COP')" class="w-full bg-brand-whatsapp hover:bg-emerald-600 text-white font-bold text-xs py-3.5 rounded-2xl shadow-md transition-all flex items-center justify-center gap-2">
+          <i class="fa-brands fa-whatsapp text-lg"></i> PEDIR POR WHATSAPP
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT / FOUNDER SECTION -->
+<section id="nosotros" class="py-20 px-4 md:px-12 bg-brand-pink">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+    <div class="lg:col-span-5 relative">
+      <div class="relative z-10 rounded-3xl overflow-hidden border-4 border-white shadow-2xl">
+        <img src="https://plus.unsplash.com/premium_photo-1683121173797-977937b30011?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D">
+      </div>
+      <div class="absolute -bottom-6 -right-6 bg-white p-6 rounded-3xl shadow-xl z-20 border border-pink-100 max-w-xs">
+        <div class="flex items-center gap-1 text-amber-400 mb-1">
+          <i class="fa-solid fa-star text-xs"></i>
+          <i class="fa-solid fa-star text-xs"></i>
+          <i class="fa-solid fa-star text-xs"></i>
+          <i class="fa-solid fa-star text-xs"></i>
+          <i class="fa-solid fa-star text-xs"></i>
+        </div>
+        <p class="text-xs font-bold text-brand-textDark">"Cada flor cuenta una historia y nuestro propósito es hacerla inolvidable."</p>
+        <span class="text-[10px] text-slate-500 block mt-2 font-semibold">— Sofia Valenzuela, Master Floral Designer</span>
+      </div>
+    </div>
+
+    <div class="lg:col-span-7 space-y-6">
+      <span class="text-brand-accent font-bold text-xs tracking-widest uppercase bg-white px-3 py-1 rounded-full shadow-sm">Nuestra Historia</span>
+      <h2 class="text-3xl sm:text-5xl font-extrabold text-brand-textDark leading-tight">Apasionados por la Botánica & el Arte Floral</h2>
+      <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+        Desde 2018, en <strong class="text-brand-textDark">ProFlowers</strong> nos hemos dedicado a transformar momentos ordinarios en recuerdos memorables a través del diseño floral contemporáneo. Trabajamos directamente con cultivadores locales para asegurar flores recién cortadas todos los días.
+      </p>
+
+      <div class="grid grid-cols-2 gap-6 pt-4">
+        <div class="bg-white/80 p-4 rounded-2xl border border-pink-100">
+          <span class="text-3xl font-black text-brand-deep">10k+</span>
+          <p class="text-xs font-bold text-slate-600 mt-1">Sonrisas Entregadas</p>
+        </div>
+        <div class="bg-white/80 p-4 rounded-2xl border border-pink-100">
+          <span class="text-3xl font-black text-brand-deep">100%</span>
+          <p class="text-xs font-bold text-slate-600 mt-1">Cultivos Sustentables</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOW IT WORKS SECTION -->
+<section class="py-20 px-4 md:px-12 bg-white">
+  <div class="max-w-7xl mx-auto text-center">
+    <span class="text-brand-accent font-bold text-xs tracking-widest uppercase bg-pink-100 px-3 py-1 rounded-full">Sencillo & Rápido</span>
+    <h2 class="text-3xl sm:text-4xl font-extrabold text-brand-textDark mt-3 mb-16">¿Cómo funciona tu pedido?</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+
+      <div class="relative bg-brand-pink/30 p-6 rounded-3xl border border-pink-100 text-center group hover:bg-brand-pink/60 transition-colors">
+        <div class="w-14 h-14 rounded-2xl bg-brand-deep text-white flex items-center justify-center font-black text-xl mx-auto mb-4 shadow-md group-hover:scale-110 transition-transform">1</div>
+        <h3 class="font-extrabold text-base text-brand-textDark mb-2">Elige tu Diseño</h3>
+        <p class="text-xs text-slate-500">Selecciona entre ramos, orquídeas o cajas de regalo exclusivas.</p>
+      </div>
+
+      <div class="relative bg-brand-pink/30 p-6 rounded-3xl border border-pink-100 text-center group hover:bg-brand-pink/60 transition-colors">
+        <div class="w-14 h-14 rounded-2xl bg-brand-deep text-white flex items-center justify-center font-black text-xl mx-auto mb-4 shadow-md group-hover:scale-110 transition-transform">2</div>
+        <h3 class="font-extrabold text-base text-brand-textDark mb-2">Personaliza</h3>
+        <p class="text-xs text-slate-500">Añade tu dedicatoria especial o un detalle como chocolates o vino.</p>
+      </div>
+
+      <div class="relative bg-brand-pink/30 p-6 rounded-3xl border border-pink-100 text-center group hover:bg-brand-pink/60 transition-colors">
+        <div class="w-14 h-14 rounded-2xl bg-brand-deep text-white flex items-center justify-center font-black text-xl mx-auto mb-4 shadow-md group-hover:scale-110 transition-transform">3</div>
+        <h3 class="font-extrabold text-base text-brand-textDark mb-2">Armado Fresco</h3>
+        <p class="text-xs text-slate-500">Nuestros floristas preparan tu arreglo al instante con tallos frescos.</p>
+      </div>
+
+      <div class="relative bg-brand-pink/30 p-6 rounded-3xl border border-pink-100 text-center group hover:bg-brand-pink/60 transition-colors">
+        <div class="w-14 h-14 rounded-2xl bg-brand-deep text-white flex items-center justify-center font-black text-xl mx-auto mb-4 shadow-md group-hover:scale-110 transition-transform">4</div>
+        <h3 class="font-extrabold text-base text-brand-textDark mb-2">Entrega Express</h3>
+        <p class="text-xs text-slate-500">Recibe o envía directamente a la puerta de esa persona especial.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SECONDARY CTA (Dark Mood Banner) -->
+<section class="py-20 px-4 md:px-12 bg-brand-darkBg text-white relative overflow-hidden">
+  <div class="max-w-5xl mx-auto text-center space-y-6 relative z-10">
+    <span class="text-brand-accent font-bold text-xs tracking-widest uppercase bg-pink-950/60 border border-brand-accent/30 px-4 py-1.5 rounded-full">¿Evento Especial?</span>
+    <h2 class="text-3xl sm:text-5xl font-extrabold leading-tight">Diseñamos la floristería para tu boda o evento corporativo</h2>
+    <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto">
+      Ofrecemos asesoría personalizada y diseño a medida para garantizar que la ambientación floral de tu evento supere todas las expectativas.
+    </p>
+    <div class="pt-4 flex flex-wrap justify-center gap-4">
+      <button onclick="openModal('Cotización de Eventos')" class="bg-brand-accent hover:bg-brand-deep text-white font-bold text-xs sm:text-sm px-8 py-4 rounded-full shadow-lg transition-all transform hover:scale-105">
+        SOLICITAR COTIZACIÓN PERSONALIZADA
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION & SHOP INFO -->
+<section id="ubicacion" class="py-20 px-4 md:px-12 bg-white">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+    <div class="lg:col-span-6 space-y-6">
+      <span class="text-brand-accent font-bold text-xs tracking-widest uppercase bg-pink-100 px-3 py-1 rounded-full">Visítanos</span>
+      <h2 class="text-3xl sm:text-5xl font-extrabold text-brand-textDark">Nuestra Boutique Floral</h2>
+      <p class="text-slate-600 text-sm sm:text-base">
+        Ven a conocer nuestra tienda física, disfruta del aroma a flores frescas y arma tu propio bouquet junto a nuestros floristas en vivo.
+      </p>
+
+      <div class="space-y-4 pt-2">
+        <div class="flex items-start gap-4">
+          <div class="bg-pink-100 p-3 rounded-2xl text-brand-deep"><i class="fa-solid fa-location-dot text-lg"></i></div>
+          <div>
+            <h4 class="font-extrabold text-sm text-brand-textDark">Dirección</h4>
+            <p class="text-xs text-slate-500">Calle de las Flores #14-28, Zona Rosa Principal</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <div class="bg-pink-100 p-3 rounded-2xl text-brand-deep"><i class="fa-solid fa-clock text-lg"></i></div>
+          <div>
+            <h4 class="font-extrabold text-sm text-brand-textDark">Horarios de Atención</h4>
+            <p class="text-xs text-slate-500">Lunes a Sábado: 8:00 AM - 7:00 PM | Domingos: 9:00 AM - 2:00 PM</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <div class="bg-pink-100 p-3 rounded-2xl text-brand-deep"><i class="fa-solid fa-phone text-lg"></i></div>
+          <div>
+            <h4 class="font-extrabold text-sm text-brand-textDark">Teléfono & WhatsApp</h4>
+            <p class="text-xs text-slate-500">+57 (300) 123-4567</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lg:col-span-6">
+      <div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-white h-96 relative">
+        <img src="https://images.unsplash.com/photo-1520763185298-1b434c919102?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6">
+          <a href="https://maps.google.com" target="_blank" class="bg-white text-brand-textDark font-bold text-xs px-5 py-3 rounded-full shadow-lg hover:bg-brand-accent hover:text-white transition-all flex items-center gap-2">
+            <i class="fa-solid fa-compass text-sm"></i> VER EN GOOGLE MAPS
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TESTIMONIALS SECTION -->
+<section class="py-20 px-4 md:px-12 bg-brand-pink">
+  <div class="max-w-7xl mx-auto text-center">
+    <span class="text-brand-accent font-bold text-xs tracking-widest uppercase bg-white px-3 py-1 rounded-full shadow-sm">Clientes Felices</span>
+    <h2 class="text-3xl sm:text-4xl font-extrabold text-brand-textDark mt-3 mb-12">Lo que dicen de ProFlowers</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+
+      <div class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100 space-y-3">
+        <div class="flex text-amber-400 gap-1"><i class="fa-solid fa-star text-xs"></i><i class="fa-solid fa-star text-xs"></i><i class="fa-solid fa-star text-xs"></i><i class="fa-solid fa-star text-xs"></i><i class="fa-solid fa-star text-xs"></i></div>
+        <p class="text-xs text-slate-600 leading-relaxed">"Pedí el bouquet de peonías para el cumpleaños de mi mamá y llegó impecable en menos de 2 horas. Las flores duraron más de una semana hermosas."</p>
+        <div class="pt-2 border-t border-slate-100">
+          <h4 class="font-extrabold text-xs text-brand-textDark">Camila Mendoza</h4>
+          <span class="text-[10px] text-slate-400 font-semibold">Cliente Verificada</span>
+        </div>
+      </div>
+
+      <div class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100 space-y-3">
+        <div class="flex text-amber-400 gap-1"><i class="fa-solid fa-star text-xs"></i><i class="fa-solid fa-star text-xs"></i><i class="fa-solid fa-star text-xs"></i><i class="fa-solid fa-star text-xs"></i><i class="fa-solid fa-star text-xs"></i></div>
+        <p class="text-xs text-slate-600 leading-relaxed">"Excelente servicio de diseño para mi boda. Sofia entendió exactamente la paleta de colores pastel que queríamos. Todo quedó mágico."</p>
+        <div class="pt-2 border-t border-slate-100">
+          <h4 class="font-extrabold text-xs text-brand-textDark">Santiago Restrepo</h4>
+          <span class="text-[10px] text-slate-400 font-semibold">Cliente Novios</span>
+        </div>
+      </div>
+
+      <div class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100 space-y-3">
+        <div class="flex text-amber-400 gap-1"><i class="fa-solid fa-star text-xs"></i><i class="fa-solid fa-star text-xs"></i><i class="fa-solid fa-star text-xs"></i><i class="fa-solid fa-star text-xs"></i><i class="fa-solid fa-star text-xs"></i></div>
+        <p class="text-xs text-slate-600 leading-relaxed">"Los tulipanes holandeses son increíbles. El empaque de regalo y la tarjeta personalizada le dieron un toque de lujo fantástico."</p>
+        <div class="pt-2 border-t border-slate-100">
+          <h4 class="font-extrabold text-xs text-brand-textDark">Mariana Gómez</h4>
+          <span class="text-[10px] text-slate-400 font-semibold">Cliente Frecuente</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQ ACCORDION SECTION -->
+<section id="faq" class="py-20 px-4 md:px-12 bg-white">
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-12">
+      <span class="text-brand-accent font-bold text-xs tracking-widest uppercase bg-pink-100 px-3 py-1 rounded-full">Resuelve tus Dudas</span>
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-brand-textDark mt-3">Preguntas Frecuentes</h2>
+    </div>
+
+    <div class="space-y-4">
+
+      <div class="border border-pink-100 rounded-2xl overflow-hidden bg-brand-pink/30">
+        <button onclick="toggleFaq(1)" class="w-full p-5 text-left font-extrabold text-sm text-brand-textDark flex items-center justify-between">
+          <span>¿Con cuánta anticipación debo hacer mi pedido?</span>
+          <i id="faqIcon-1" class="fa-solid fa-chevron-down text-xs transition-transform"></i>
+        </button>
+        <div id="faqAnswer-1" class="hidden px-5 pb-5 text-xs text-slate-600 leading-relaxed">
+          Para envíos el mismo día recomendamos realizar el pedido antes de las 2:00 PM. Para eventos o arreglos personalizados grandes, sugerimos realizar el pedido con al menos 48 horas de anticipación.
+        </div>
+      </div>
+
+      <div class="border border-pink-100 rounded-2xl overflow-hidden bg-brand-pink/30">
+        <button onclick="toggleFaq(2)" class="w-full p-5 text-left font-extrabold text-sm text-brand-textDark flex items-center justify-between">
+          <span>¿Cómo garantizan la frescura de las flores?</span>
+          <i id="faqIcon-2" class="fa-solid fa-chevron-down text-xs transition-transform"></i>
+        </button>
+        <div id="faqAnswer-2" class="hidden px-5 pb-5 text-xs text-slate-600 leading-relaxed">
+          Recibimos flores frescas todas las mañanas desde nuestros cultivos aliados. Además, cada arreglo se envía con alimento floral especial y recomendaciones para prolongar la vida útil de tus flores por más de 7 días.
+        </div>
+      </div>
+
+      <div class="border border-pink-100 rounded-2xl overflow-hidden bg-brand-pink/30">
+        <button onclick="toggleFaq(3)" class="w-full p-5 text-left font-extrabold text-sm text-brand-textDark flex items-center justify-between">
+          <span>¿Puedo personalizar el mensaje de la tarjeta?</span>
+          <i id="faqIcon-3" class="fa-solid fa-chevron-down text-xs transition-transform"></i>
+        </button>
+        <div id="faqAnswer-3" class="hidden px-5 pb-5 text-xs text-slate-600 leading-relaxed">
+          ¡Por supuesto! Durante el proceso de compra por WhatsApp puedes indicarnos tu mensaje personalizado. Lo imprimiremos en una tarjeta fina y elegante sin costo adicional.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- LARGE SOCIAL MEDIA SECTION -->
+<section class="py-16 px-4 bg-brand-pink border-t border-pink-200 text-center">
+  <div class="max-w-4xl mx-auto space-y-6">
+    <span class="text-brand-accent font-bold text-xs tracking-widest uppercase bg-white px-4 py-1.5 rounded-full shadow-sm">Síguenos en Redes</span>
+    <h2 class="text-2xl sm:text-4xl font-extrabold text-brand-textDark">Únete a Nuestra Comunidad Floral</h2>
+
+    <div class="flex items-center justify-center gap-6 sm:gap-10 pt-4">
+      <a href="#" aria-label="Instagram" class="w-16 h-16 rounded-3xl bg-white text-pink-600 hover:bg-brand-accent hover:text-white shadow-lg flex items-center justify-center text-3xl transition-all transform hover:-translate-y-2">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+      <a href="#" aria-label="TikTok" class="w-16 h-16 rounded-3xl bg-white text-slate-900 hover:bg-brand-accent hover:text-white shadow-lg flex items-center justify-center text-3xl transition-all transform hover:-translate-y-2">
+        <i class="fa-brands fa-tiktok"></i>
+      </a>
+      <a href="https://wa.me/573001234567" target="_blank" aria-label="WhatsApp" class="w-16 h-16 rounded-3xl bg-white text-brand-whatsapp hover:bg-brand-whatsapp hover:text-white shadow-lg flex items-center justify-center text-3xl transition-all transform hover:-translate-y-2">
+        <i class="fa-brands fa-whatsapp"></i>
+      </a>
+      <a href="#" aria-label="Facebook" class="w-16 h-16 rounded-3xl bg-white text-blue-600 hover:bg-brand-accent hover:text-white shadow-lg flex items-center justify-center text-3xl transition-all transform hover:-translate-y-2">
+        <i class="fa-brands fa-facebook"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-brand-darkBg text-white pt-16 pb-12 px-4 md:px-12">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 pb-12 border-b border-white/10">
+
+    <div class="md:col-span-5 space-y-4">
+      <a href="#" class="text-2xl font-extrabold tracking-wider text-white">
+        PRO<span class="text-brand-accent">FLOWERS</span>
+      </a>
+      <p class="text-xs text-slate-400 max-w-sm leading-relaxed">
+        Floristería artesanal dedicada a la creación de arreglos florales contemporáneos con flores de la más alta calidad e historias inolvidables.
+      </p>
+    </div>
+
+    <div class="md:col-span-3 space-y-3">
+      <h4 class="font-extrabold text-sm text-pink-300 uppercase tracking-wider">Enlaces Rápidos</h4>
+      <ul class="space-y-2 text-xs text-slate-400 font-semibold">
+        <li><a href="#catalogo" class="hover:text-white transition-colors">Catálogo de Flores</a></li>
+        <li><a href="#nosotros" class="hover:text-white transition-colors">Sobre Nosotros</a></li>
+        <li><a href="#ubicacion" class="hover:text-white transition-colors">Boutique & Horarios</a></li>
+        <li><a href="#faq" class="hover:text-white transition-colors">Preguntas Frecuentes</a></li>
+      </ul>
+    </div>
+
+    <div class="md:col-span-4 space-y-3">
+      <h4 class="font-extrabold text-sm text-pink-300 uppercase tracking-wider">Suscríbete al Club Floral</h4>
+      <p class="text-xs text-slate-400">Recibe un 15% de descuento en tu primer pedido y consejos semanales de cuidado.</p>
+      <form onsubmit="subscribeNewsletter(event)" class="flex gap-2 pt-1">
+        <input type="email" placeholder="Tu correo electrónico" required class="bg-white/10 text-white text-xs px-4 py-3 rounded-full flex-1 border border-white/20 focus:outline-none focus:border-brand-accent">
+        <button type="submit" class="bg-brand-accent hover:bg-brand-deep text-white font-bold text-xs px-6 py-3 rounded-full transition-colors">
+          UNIRME
+        </button>
+      </form>
+    </div>
+
+  </div>
+
+  <div class="max-w-7xl mx-auto pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 gap-4">
+    <p>© 2026 ProFlowers Studio. Todos los derechos reservados.</p>
+    <p>Diseño Floral Contemporáneo & Envíos Directos</p>
+  </div>
+</footer>
+
+<!-- INTERACTIVE RESERVATION / INQUIRY MODAL -->
+<div id="actionModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+  <div class="bg-white rounded-3xl max-w-md w-full p-6 relative border border-pink-100 shadow-2xl">
+    <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-800">
+      <i class="fa-solid fa-xmark text-lg"></i>
+    </button>
+    <div class="text-center space-y-3">
+      <div class="w-12 h-12 bg-pink-100 rounded-full text-brand-deep flex items-center justify-center mx-auto">
+        <i class="fa-solid fa-spa text-xl"></i>
+      </div>
+      <h3 id="modalTitle" class="text-xl font-extrabold text-brand-textDark">Atención Personalizada</h3>
+      <p class="text-xs text-slate-500">Completa tus datos y uno de nuestros diseñadores florales te atenderá de inmediato por WhatsApp.</p>
+    </div>
+    <form onsubmit="sendWhatsAppModal(event)" class="space-y-3 mt-6">
+      <input type="text" id="custName" placeholder="Tu Nombre Completo" required class="w-full bg-pink-50/50 border border-pink-200 text-xs text-slate-800 p-3.5 rounded-xl focus:outline-none focus:border-brand-accent">
+      <input type="tel" id="custPhone" placeholder="Teléfono de Contacto" required class="w-full bg-pink-50/50 border border-pink-200 text-xs text-slate-800 p-3.5 rounded-xl focus:outline-none focus:border-brand-accent">
+      <textarea id="custNote" placeholder="¿Qué arreglo o evento te interesa?" rows="3" class="w-full bg-pink-50/50 border border-pink-200 text-xs text-slate-800 p-3.5 rounded-xl focus:outline-none focus:border-brand-accent"></textarea>
+      <button type="submit" class="w-full bg-brand-whatsapp hover:bg-emerald-700 text-white font-bold text-xs py-4 rounded-xl shadow-lg flex items-center justify-center gap-2 transition-colors">
+        <i class="fa-brands fa-whatsapp text-base"></i> ENVIAR A WHATSAPP
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- JAVASCRIPT LOGIC -->
+<script>
+  // Toggle Mobile Dropdown Menu
+  function toggleMobileMenu() {
+    const menu = document.getElementById('mobileMenu');
+    menu.classList.toggle('hidden');
+  }
+
+  // WhatsApp Direct Order for Catalog
+  function orderWhatsApp(productName, price) {
+    const phoneNumber = "573001234567";
+    const text = `¡Hola PROFLOWERS! 🌸 Quisiera realizar el pedido del arreglo *${productName}* (${price}). ¿Tienen disponibilidad para envío inmediato?`;
+    const url = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank');
+  }
+
+  // Modal Functionality
+  function openModal(title) {
+    const modal = document.getElementById('actionModal');
+    document.getElementById('modalTitle').innerText = title || 'Cotización Especial';
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    const modal = document.getElementById('actionModal');
+    modal.classList.add('hidden');
+    document.body.style.overflow = 'auto';
+  }
+
+  function sendWhatsAppModal(event) {
+    event.preventDefault();
+    const name = document.getElementById('custName').value;
+    const phone = document.getElementById('custPhone').value;
+    const note = document.getElementById('custNote').value;
+    const title = document.getElementById('modalTitle').innerText;
+
+    const phoneNumber = "573001234567";
+    const text = `*Solicitud desde Landing Page (${title})*\n\n` +
+      `*Nombre:* ${name}\n` +
+      `*Teléfono:* ${phone}\n` +
+      `*Detalles:* ${note}`;
+
+    window.open(`https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(text)}`, '_blank');
+    closeModal();
+  }
+
+  // FAQ Toggle Logic
+  function toggleFaq(id) {
+    const answer = document.getElementById(`faqAnswer-${id}`);
+    const icon = document.getElementById(`faqIcon-${id}`);
+
+    if (answer.classList.contains('hidden')) {
+      answer.classList.remove('hidden');
+      icon.classList.add('rotate-180');
+    } else {
+      answer.classList.add('hidden');
+      icon.classList.remove('rotate-180');
+    }
+  }
+
+  // Newsletter Toast Notification
+  function subscribeNewsletter(event) {
+    event.preventDefault();
+    alert('¡Gracias por suscribirte al Club Floral de PROFLOWERS!');
+    event.target.reset();
+  }
+</script>
 </body>
-
 </html>
